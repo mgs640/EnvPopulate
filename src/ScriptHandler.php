@@ -14,12 +14,19 @@ class ScriptHandler
     public static function populateEnv(Event $event)
     {
         $args = $event->getArguments();
+        $params = [];
+        foreach ($args as $arg) {
+            $argParts = explode('=', $arg);
+            
+            $params[$argParts[0]] = $argParts[1];
+        }
+        
         $extras = $event->getComposer()->getPackage()->getExtra();
         $config = array();
         
-        if (isset($args['example-file']) && isset($args['generated-file'])) {
-            $config['files']['example-file'] = $args['example-file'];
-            $config['files']['generated-file'] = $args['generated-file'];
+        if (isset($params['example-file']) && isset($params['generated-file'])) {
+            $config['files']['example-file'] = $params['example-file'];
+            $config['files']['generated-file'] = $params['generated-file'];
         } elseif (isset($extras[self::EXTRA_KEY]) && is_array($extras[self::EXTRA_KEY])) {
             $config = $extras[self::EXTRA_KEY];
         }
