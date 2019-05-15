@@ -25,8 +25,10 @@ class ScriptHandler
         $config = array();
         
         if (isset($params['example-file']) && isset($params['generated-file'])) {
-            $config['files']['example-file'] = $params['example-file'];
-            $config['files']['generated-file'] = $params['generated-file'];
+            $config['files'][] = [
+                'example-file' => $params['example-file'],
+                'generated-file' => $params['generated-file'],
+            ];
         } elseif (isset($extras[self::EXTRA_KEY]) && is_array($extras[self::EXTRA_KEY])) {
             $config = $extras[self::EXTRA_KEY];
         }
